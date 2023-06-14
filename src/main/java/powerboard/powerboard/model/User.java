@@ -14,6 +14,9 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
+    @Id
+    @GeneratedValue
+    private Long id;
     private String username;
     private String firstName;
     private String lastName;
@@ -21,9 +24,7 @@ public class User implements UserDetails {
     private String password;
     @OneToMany
     private Set<Board> boards;
-    @Id
-    @GeneratedValue
-    private Long id;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;

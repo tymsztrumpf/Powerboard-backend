@@ -19,4 +19,6 @@ public class Board {
     //TODO THINK ABOUT ROLES INSTEAD OF OWNER CLASS FIELD
     @OneToMany
     private Set<User> users;
+    @OneToMany
+    private Set<CardList> cardLists;
 }
