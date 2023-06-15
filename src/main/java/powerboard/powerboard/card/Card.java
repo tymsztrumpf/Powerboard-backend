@@ -1,10 +1,12 @@
-package powerboard.powerboard.model;
+package powerboard.powerboard.card;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import powerboard.powerboard.cardlist.CardList;
+import powerboard.powerboard.user.User;
 
 import java.util.Set;
 

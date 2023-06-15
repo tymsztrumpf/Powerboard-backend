@@ -1,7 +1,7 @@
-package powerboard.powerboard.service;
+package powerboard.powerboard.user;
 
 import org.springframework.stereotype.Service;
-import powerboard.powerboard.repository.UserRepository;
+
 @Service
 public class UserService {
     private final UserRepository userRepository;
@@ -9,6 +9,5 @@ public class UserService {
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-
 
 }

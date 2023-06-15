@@ -1,4 +1,4 @@
-package powerboard.powerboard.model;
+package powerboard.powerboard.user;
 
 public enum Role {
 

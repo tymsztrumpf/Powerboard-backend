@@ -1,8 +1,8 @@
-package powerboard.powerboard.repository;
+package powerboard.powerboard.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import powerboard.powerboard.model.User;
+import powerboard.powerboard.user.User;
 
 import java.util.Optional;
 

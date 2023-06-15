@@ -6,9 +6,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import powerboard.powerboard.config.JwtService;
-import powerboard.powerboard.model.Role;
-import powerboard.powerboard.model.User;
-import powerboard.powerboard.repository.UserRepository;
+import powerboard.powerboard.user.Role;
+import powerboard.powerboard.user.User;
+import powerboard.powerboard.user.UserRepository;
 
 @Service
 @RequiredArgsConstructor

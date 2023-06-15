@@ -1,10 +1,12 @@
-package powerboard.powerboard.model;
+package powerboard.powerboard.user;
 
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import powerboard.powerboard.board.Board;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;

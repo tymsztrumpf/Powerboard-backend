@@ -1,7 +1,9 @@
-package powerboard.powerboard.model;
+package powerboard.powerboard.board;
 
 import jakarta.persistence.*;
 import lombok.*;
+import powerboard.powerboard.cardlist.CardList;
+import powerboard.powerboard.user.User;
 
 import java.util.Set;
 
@@ -12,6 +14,7 @@ import java.util.Set;
 @Entity
 public class Board {
     @Id
+    @GeneratedValue
     private Long id;
     private String title;
     @OneToOne
