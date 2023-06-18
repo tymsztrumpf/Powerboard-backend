@@ -27,6 +27,7 @@ public class Board {
     @JsonIgnore
     private Set<User> users;
     @OneToMany
+    @EqualsAndHashCode.Exclude
     private Set<CardList> cardLists;
     @Builder
     public Board(String title, User owner) {

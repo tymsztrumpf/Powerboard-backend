@@ -1,10 +1,8 @@
 package powerboard.powerboard.cardlist;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import powerboard.powerboard.board.Board;
 import powerboard.powerboard.card.Card;
 
@@ -22,6 +20,8 @@ public class CardList {
     private String title;
     @ManyToOne
     @JoinColumn(name = "board_id")
+    @EqualsAndHashCode.Exclude
+    @JsonIgnore
     private Board board;
     @OneToMany
     private Set<Card> cards;
