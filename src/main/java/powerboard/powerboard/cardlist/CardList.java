@@ -17,6 +17,7 @@ import java.util.Set;
 @Entity
 public class CardList {
     @Id
+    @GeneratedValue
     private Long id;
     private String title;
     @ManyToOne
