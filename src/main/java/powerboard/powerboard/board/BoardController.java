@@ -2,10 +2,9 @@ package powerboard.powerboard.board;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
@@ -13,6 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class BoardController {
     private final BoardService boardService;
 
+    @GetMapping
+    public ResponseEntity<Set<Board>> getUserBoards(){
+        return ResponseEntity.ok(boardService.getUserBoards());
+    }
     @PostMapping
     public ResponseEntity<Void> create(@RequestBody BoardRequest request) {
         boardService.create(request);

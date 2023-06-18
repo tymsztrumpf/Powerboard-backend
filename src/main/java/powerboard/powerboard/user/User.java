@@ -1,13 +1,17 @@
 package powerboard.powerboard.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import powerboard.powerboard.board.Board;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -25,8 +29,11 @@ public class User implements UserDetails {
     private String lastName;
     private String email;
     private String password;
-    @OneToMany
-    private Set<Board> boards;
+    @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @JsonIgnore
+    private Set<Board> boards = new HashSet<>();
     @Enumerated(EnumType.STRING)
     private Role role;
     @Override
