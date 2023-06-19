@@ -27,4 +27,5 @@ public class CardListService {
         cardListRepository.save(cardList);
         boardRepository.save(board);
     }
+
 }

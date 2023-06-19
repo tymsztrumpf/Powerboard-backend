@@ -18,4 +18,12 @@ public class CardController {
         cardService.addCardToCardList(request, boardId, cardListId);
         return ResponseEntity.ok().build();
     }
+    @DeleteMapping
+    public ResponseEntity<Void> remove(@RequestParam Long cardId,
+                                       @RequestParam Long cardListId,
+                                       @RequestParam Long boardId) {
+        cardService.deleteCard(cardId, cardListId, boardId);
+        return ResponseEntity.ok().build();
+    }
+
 }

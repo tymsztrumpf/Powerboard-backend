@@ -19,7 +19,7 @@ public class CardService {
         Optional<Board> optionalBoard = boardRepository.findById(boardId);
         Board board = optionalBoard.orElseThrow(() -> new RuntimeException("Board not found"));
 
-        CardList cardList = board.getCardLists().stream().filter(c -> c.getId() == cardListId).toList().get(0);
+        CardList cardList = board.getCardLists().stream().filter(c -> c.getId() == cardListId).findAny().get();
 
         Card card = Card.builder()
                 .title(request.getTitle())
@@ -27,7 +27,19 @@ public class CardService {
                 .build();
 
         cardList.getCards().add(card);
-        cardListRepository.save(cardList);
         cardRepository.save(card);
+        cardListRepository.save(cardList);
+    }
+    public void deleteCard(Long cardId, Long cardListId, Long boardId) {
+        Optional<Board> optionalBoard = boardRepository.findById(boardId);
+        Board board = optionalBoard.orElseThrow(() -> new RuntimeException("Board not found"));
+
+        CardList cardList = board.getCardLists().stream().filter(c -> c.getId() == cardListId).findAny().get();
+
+        Card card = cardList.getCards().stream().filter(c -> c.getId() == cardId).findAny().get();
+
+        cardList.getCards().remove(card);
+        cardRepository.delete(card);
+        cardListRepository.save(cardList);
     }
 }
