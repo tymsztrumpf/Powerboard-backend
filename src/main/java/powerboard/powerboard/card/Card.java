@@ -22,6 +22,7 @@ public class Card {
     @OneToMany
     private Set<User> executors;
     @ManyToOne
+    @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @JsonIgnore
     private CardList cardList;

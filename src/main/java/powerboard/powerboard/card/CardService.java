@@ -2,6 +2,7 @@ package powerboard.powerboard.card;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import powerboard.powerboard.board.Board;
 import powerboard.powerboard.board.BoardRepository;
 import powerboard.powerboard.cardlist.CardList;
@@ -41,5 +42,21 @@ public class CardService {
         cardList.getCards().remove(card);
         cardRepository.delete(card);
         cardListRepository.save(cardList);
+    }
+
+    @Transactional
+    public void updateCard(CardRequest request, Long cardId, Long cardListId, Long boardId) {
+        Optional<Board> optionalBoard = boardRepository.findById(boardId);
+        Board board = optionalBoard.orElseThrow(() -> new RuntimeException("Board not found"));
+
+        CardList cardList = board.getCardLists().stream().filter(c -> c.getId() == cardListId).findAny().get();
+
+        Card card = cardList.getCards().stream().filter(c -> c.getId() == cardId).findAny().get();
+
+        card.setTitle(request.getTitle());
+        card.setDescription(request.getDescription());
+        card.setExecutors(request.getExecutors());
+        card.setCardList(cardListRepository.findById(request.getCardListId()).orElseThrow());
+        cardRepository.save(card);
     }
 }

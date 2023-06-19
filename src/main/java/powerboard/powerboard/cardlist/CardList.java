@@ -16,6 +16,7 @@ import java.util.Set;
 public class CardList {
     @Id
     @GeneratedValue
+    @EqualsAndHashCode.Exclude
     private Long id;
     private String title;
     @ManyToOne

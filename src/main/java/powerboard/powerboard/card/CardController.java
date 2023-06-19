@@ -25,5 +25,13 @@ public class CardController {
         cardService.deleteCard(cardId, cardListId, boardId);
         return ResponseEntity.ok().build();
     }
+    @PatchMapping
+    public ResponseEntity<Void> update(@RequestBody CardRequest request,
+                                       @RequestParam Long cardId,
+                                       @RequestParam Long cardListId,
+                                       @RequestParam Long boardId) {
+        cardService.updateCard(request, cardId, cardListId, boardId);
+        return ResponseEntity.ok().build();
+    }
 
 }

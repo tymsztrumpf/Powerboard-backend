@@ -29,12 +29,11 @@ public class BoardService {
         board.getUsers().add(user);
         user.getBoards().add(board);
         boardRepository.save(board);
-        userRepository.save(user);
     }
     private User getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Optional<User> optionalUser = Optional.ofNullable((User) auth.getPrincipal());
-        return optionalUser.orElseThrow(); // TODO OBSLUZYC WYJATEK
+        User user = (User) auth.getPrincipal();
+        return userRepository.findByEmail(user.getEmail()).orElseThrow();
     }
     public Set<Board> getUserBoards() {
         return boardRepository.findAllByUserEmail(getCurrentUser().getEmail());

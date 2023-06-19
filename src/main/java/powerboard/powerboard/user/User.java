@@ -3,8 +3,6 @@ package powerboard.powerboard.user;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +17,7 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
@@ -27,11 +26,10 @@ public class User implements UserDetails {
     private Long id;
     private String firstName;
     private String lastName;
+    @EqualsAndHashCode.Include
     private String email;
     private String password;
-    @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
+    @ManyToMany(mappedBy = "users", cascade = {CascadeType.MERGE})
     @JsonIgnore
     private Set<Board> boards = new HashSet<>();
     @Enumerated(EnumType.STRING)
