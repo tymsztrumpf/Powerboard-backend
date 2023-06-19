@@ -15,4 +15,10 @@ public class CardListController {
         cardListService.addListToBoard(request, boardId);
         return ResponseEntity.ok().build();
     }
+
+    @DeleteMapping
+    public ResponseEntity<Void> remove(@RequestParam Long cardListId, @RequestParam Long boardId) {
+        cardListService.deleteCardList(cardListId, boardId);
+        return ResponseEntity.ok().build();
+    }
 }
