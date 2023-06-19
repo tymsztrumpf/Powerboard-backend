@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import powerboard.powerboard.cardlist.CardList;
 import powerboard.powerboard.user.User;
 import powerboard.powerboard.user.UserRepository;
 
@@ -37,5 +38,15 @@ public class BoardService {
     }
     public Set<Board> getUserBoards() {
         return boardRepository.findAllByUserEmail(getCurrentUser().getEmail());
+    }
+
+    public void deleteBoard(Long boardId) {
+        User user = getCurrentUser();
+        Optional<Board> optionalBoard = boardRepository.findById(boardId);
+        Board board = optionalBoard.orElseThrow(() -> new RuntimeException("Board not found"));
+        user.getBoards().remove(board);
+
+        userRepository.save(user);
+        boardRepository.delete(board);
     }
 }

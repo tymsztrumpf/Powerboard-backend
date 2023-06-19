@@ -26,7 +26,7 @@ public class Board {
     @EqualsAndHashCode.Exclude
     @JsonIgnore
     private Set<User> users;
-    @OneToMany
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
     @EqualsAndHashCode.Exclude
     private Set<CardList> cardLists;
     @Builder
