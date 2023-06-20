@@ -48,4 +48,12 @@ public class BoardService {
         userRepository.save(user);
         boardRepository.delete(board);
     }
+    @Transactional
+    public void update(BoardRequest request, Long boardId) {
+        Optional<Board> optionalBoard = boardRepository.findById(boardId);
+        Board board = optionalBoard.orElseThrow(() -> new RuntimeException("Board not found"));
+
+        board.setTitle(request.getTitle());
+        boardRepository.save(board);
+    }
 }
