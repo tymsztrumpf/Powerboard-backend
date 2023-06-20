@@ -1,5 +1,6 @@
 package powerboard.powerboard.cardlist;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import powerboard.powerboard.board.Board;
@@ -41,4 +42,14 @@ public class CardListService {
         cardListRepository.delete(cardList);
         boardRepository.save(board);
     }
+    @Transactional
+    public void update(CardListRequest request, Long boardId, Long cardListId) {
+        Optional<Board> optionalBoard = boardRepository.findById(boardId);
+        Board board = optionalBoard.orElseThrow(() -> new RuntimeException("Board bo found"));
+        CardList cardList = board.getCardLists().stream().filter(c -> c.getId() == cardListId).findAny().get();
+        cardList.setTitle(request.getTitle());
+
+        cardListRepository.save(cardList);
+    }
+
 }
