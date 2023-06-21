@@ -1,24 +1,23 @@
 package powerboard.powerboard.board;
 
 import lombok.RequiredArgsConstructor;
-import org.hibernate.Hibernate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import powerboard.powerboard.cardlist.CardList;
 import powerboard.powerboard.user.User;
 import powerboard.powerboard.user.UserRepository;
 
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class BoardService {
     private final BoardRepository boardRepository;
     private final UserRepository userRepository;
+    private final BoardDTOMapper boardDTOMapper;
     @Transactional
     public void create(BoardRequest request){
         User user = getCurrentUser();
@@ -35,8 +34,10 @@ public class BoardService {
         User user = (User) auth.getPrincipal();
         return userRepository.findByEmail(user.getEmail()).orElseThrow();
     }
-    public Set<Board> getUserBoards() {
-        return boardRepository.findAllByUserEmail(getCurrentUser().getEmail());
+    public Set<BoardDTO> getUserBoards() {
+        return boardRepository.findAllByUserEmail(getCurrentUser().getEmail())
+                .stream()
+                .map(boardDTOMapper).collect(Collectors.toSet());
     }
 
     public void deleteBoard(Long boardId) {

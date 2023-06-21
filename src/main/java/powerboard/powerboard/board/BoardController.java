@@ -13,7 +13,7 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping
-    public ResponseEntity<Set<Board>> getUserBoards(){
+    public ResponseEntity<Set<BoardDTO>> getUserBoards(){
         return ResponseEntity.ok(boardService.getUserBoards());
     }
     @PostMapping
