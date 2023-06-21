@@ -1,7 +1,6 @@
 package powerboard.powerboard.board;
 
-import powerboard.powerboard.cardlist.CardList;
-import powerboard.powerboard.user.User;
+import powerboard.powerboard.cardlist.CardListDTO;
 import powerboard.powerboard.user.UserDTO;
 
 
@@ -12,7 +11,7 @@ public record BoardDTO(
         String title,
         UserDTO owner,
         Set<UserDTO> users,
-        Set<CardList> cardLists
+        Set<CardListDTO> cardLists
 ) {
 
 }

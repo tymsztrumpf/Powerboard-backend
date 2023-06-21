@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import powerboard.powerboard.card.CardDTO;
 import powerboard.powerboard.card.CardDTOMapper;
-import powerboard.powerboard.user.UserDTO;
 
 import java.util.HashSet;
 import java.util.Set;
