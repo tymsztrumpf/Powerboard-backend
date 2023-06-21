@@ -3,7 +3,6 @@ package powerboard.powerboard.card;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import powerboard.powerboard.cardlist.CardListRequest;
 
 @RestController
 @RequiredArgsConstructor

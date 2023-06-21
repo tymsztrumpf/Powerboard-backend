@@ -6,6 +6,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import powerboard.powerboard.user.User;
+import powerboard.powerboard.user.UserDTO;
+import powerboard.powerboard.user.UserDTOMapper;
 import powerboard.powerboard.user.UserRepository;
 
 import java.util.Optional;
@@ -18,6 +20,7 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final UserRepository userRepository;
     private final BoardDTOMapper boardDTOMapper;
+    private final UserDTOMapper userDTOMapper;
     @Transactional
     public BoardDTO create(BoardRequest request){
         User user = getCurrentUser();
@@ -70,5 +73,11 @@ public class BoardService {
         board.addUser(user);
         boardRepository.save(board);
         return boardDTOMapper.apply(board);
+    }
+    public Set<UserDTO> getBoardUsers(Long boardId) {
+        Optional<Board> optionalBoard = boardRepository.findById(boardId);
+        Board board = optionalBoard.orElseThrow(() -> new RuntimeException("Board not found"));
+
+        return board.getUsers().stream().map(userDTOMapper).collect(Collectors.toSet());
     }
 }

@@ -3,6 +3,7 @@ package powerboard.powerboard.board;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import powerboard.powerboard.user.UserDTO;
 
 import java.util.Set;
 
@@ -34,5 +35,9 @@ public class BoardController {
     public ResponseEntity <BoardDTO> addUser(@RequestParam String userEmail,
                                              @RequestParam Long boardId) {
         return ResponseEntity.ok(boardService.addUser(userEmail, boardId));
+    }
+    @GetMapping("/users")
+    public ResponseEntity <Set<UserDTO>> getBoardUsers(@RequestParam Long boardId) {
+        return ResponseEntity.ok(boardService.getBoardUsers(boardId));
     }
 }
