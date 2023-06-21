@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import powerboard.powerboard.user.UserDTOMapper;
 
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -16,6 +17,11 @@ private final UserDTOMapper userDTOMapper;
                 board.getId(),
                 board.getTitle(),
                 userDTOMapper.apply(board.getOwner()),
-                board.getCardLists());
+                board.getUsers()
+                        .stream()
+                        .map(userDTOMapper)
+                        .collect(Collectors.toSet()),
+                board.getCardLists()
+                );
     }
 }

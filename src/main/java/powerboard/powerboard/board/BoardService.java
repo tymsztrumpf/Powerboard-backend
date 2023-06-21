@@ -19,7 +19,7 @@ public class BoardService {
     private final UserRepository userRepository;
     private final BoardDTOMapper boardDTOMapper;
     @Transactional
-    public void create(BoardRequest request){
+    public BoardDTO create(BoardRequest request){
         User user = getCurrentUser();
         Board board = Board.builder()
                 .title(request.getTitle())
@@ -28,6 +28,7 @@ public class BoardService {
         board.getUsers().add(user);
         user.getBoards().add(board);
         boardRepository.save(board);
+        return boardDTOMapper.apply(board);
     }
     private User getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
