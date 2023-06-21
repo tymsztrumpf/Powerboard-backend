@@ -51,11 +51,12 @@ public class BoardService {
         boardRepository.delete(board);
     }
     @Transactional
-    public void update(BoardRequest request, Long boardId) {
+    public BoardDTO update(BoardRequest request, Long boardId) {
         Optional<Board> optionalBoard = boardRepository.findById(boardId);
         Board board = optionalBoard.orElseThrow(() -> new RuntimeException("Board not found"));
 
         board.setTitle(request.getTitle());
         boardRepository.save(board);
+        return boardDTOMapper.apply(board);
     }
 }

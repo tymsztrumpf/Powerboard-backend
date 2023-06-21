@@ -24,8 +24,7 @@ public class BoardController {
         boardService.deleteBoard(boardId);
         return ResponseEntity.ok().build();
     }
-    @PatchMapping ResponseEntity<Void> update(@RequestBody BoardRequest request, @RequestParam Long boardId) {
-        boardService.update(request, boardId);
-        return ResponseEntity.ok().build();
+    @PatchMapping ResponseEntity<BoardDTO> update(@RequestBody BoardRequest request, @RequestParam Long boardId) {
+        return ResponseEntity.ok(boardService.update(request, boardId));
     }
 }
