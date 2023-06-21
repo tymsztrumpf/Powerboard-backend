@@ -59,4 +59,16 @@ public class BoardService {
         boardRepository.save(board);
         return boardDTOMapper.apply(board);
     }
+    @Transactional
+    public BoardDTO addUser(String userEmail, Long boardId) {
+        Optional<Board> optionalBoard = boardRepository.findById(boardId);
+        Board board = optionalBoard.orElseThrow(() -> new RuntimeException("Board not found"));
+
+        Optional<User> optionalUser = userRepository.findByEmail(userEmail);
+        User user = optionalUser.orElseThrow(() -> new RuntimeException("User not found"));
+
+        board.addUser(user);
+        boardRepository.save(board);
+        return boardDTOMapper.apply(board);
+    }
 }

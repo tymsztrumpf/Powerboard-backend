@@ -20,11 +20,19 @@ public class BoardController {
     public ResponseEntity<BoardDTO> create(@RequestBody BoardRequest request) {
         return ResponseEntity.ok(boardService.create(request));
     }
-    @DeleteMapping ResponseEntity<Void> remove(@RequestParam Long boardId) {
+    @DeleteMapping
+    ResponseEntity<Void> remove(@RequestParam Long boardId) {
         boardService.deleteBoard(boardId);
         return ResponseEntity.ok().build();
     }
-    @PatchMapping ResponseEntity<BoardDTO> update(@RequestBody BoardRequest request, @RequestParam Long boardId) {
+    @PatchMapping
+    public ResponseEntity<BoardDTO> update(@RequestBody BoardRequest request,
+                                           @RequestParam Long boardId) {
         return ResponseEntity.ok(boardService.update(request, boardId));
+    }
+    @PatchMapping("/add-user")
+    public ResponseEntity <BoardDTO> addUser(@RequestParam String userEmail,
+                                             @RequestParam Long boardId) {
+        return ResponseEntity.ok(boardService.addUser(userEmail, boardId));
     }
 }
