@@ -3,7 +3,6 @@ package powerboard.powerboard.cardlist;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import powerboard.powerboard.board.BoardRequest;
 
 @RestController
 @RequiredArgsConstructor
@@ -11,9 +10,8 @@ import powerboard.powerboard.board.BoardRequest;
 public class CardListController {
     private final CardListService cardListService;
     @PostMapping
-    public ResponseEntity<Void> add(@RequestBody CardListRequest request, @RequestParam Long boardId) {
-        cardListService.addListToBoard(request, boardId);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<CardListDTO> add(@RequestBody CardListRequest request, @RequestParam Long boardId) {
+        return ResponseEntity.ok(cardListService.addListToBoard(request, boardId));
     }
     @DeleteMapping
     public ResponseEntity<Void> remove(@RequestParam Long cardListId, @RequestParam Long boardId) {
@@ -21,8 +19,7 @@ public class CardListController {
         return ResponseEntity.ok().build();
     }
     @PatchMapping
-    public ResponseEntity<Void> update(@RequestBody CardListRequest request, @RequestParam Long boardId, @RequestParam Long cardListId){
-        cardListService.update(request, boardId, cardListId);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<CardListDTO> update(@RequestBody CardListRequest request, @RequestParam Long boardId, @RequestParam Long cardListId){
+        return ResponseEntity.ok(cardListService.update(request, boardId, cardListId));
     }
 }

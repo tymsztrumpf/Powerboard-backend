@@ -16,9 +16,9 @@ import java.util.Set;
 public class CardListService {
     private final CardListRepository cardListRepository;
     private final BoardRepository boardRepository;
-    private final CardRepository cardRepository;
+    private final CardListDTOMapper cardListDTOMapper;
 
-    public void addListToBoard(CardListRequest request, Long boardId) {
+    public CardListDTO addListToBoard(CardListRequest request, Long boardId) {
         Optional<Board> optionalBoard = boardRepository.findById(boardId);
         Board board = optionalBoard.orElseThrow(() -> new RuntimeException("Board not found"));
         // TODO HANDLE EXCEPTION IN PROPER ELEGANT WAY
@@ -31,6 +31,7 @@ public class CardListService {
         board.getCardLists().add(cardList);
         cardListRepository.save(cardList);
         boardRepository.save(board);
+        return cardListDTOMapper.apply(cardList);
     }
     public void deleteCardList(Long cardListId, Long boardId) {
         Optional<Board> optionalBoard = boardRepository.findById(boardId);
@@ -43,13 +44,14 @@ public class CardListService {
         boardRepository.save(board);
     }
     @Transactional
-    public void update(CardListRequest request, Long boardId, Long cardListId) {
+    public CardListDTO update(CardListRequest request, Long boardId, Long cardListId) {
         Optional<Board> optionalBoard = boardRepository.findById(boardId);
         Board board = optionalBoard.orElseThrow(() -> new RuntimeException("Board bo found"));
         CardList cardList = board.getCardLists().stream().filter(c -> c.getId() == cardListId).findAny().get();
         cardList.setTitle(request.getTitle());
 
         cardListRepository.save(cardList);
+        return cardListDTOMapper.apply(cardList);
     }
 
 }
