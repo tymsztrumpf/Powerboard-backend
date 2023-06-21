@@ -31,5 +31,11 @@ public class CardController {
                                        @RequestParam Long boardId) {
         return ResponseEntity.ok(cardService.updateCard(request, cardId, cardListId, boardId));
     }
-
+    @PatchMapping("/add-user")
+    public ResponseEntity<CardDTO> addUser(@RequestParam Long cardId,
+                                           @RequestParam Long cardListId,
+                                           @RequestParam Long boardId,
+                                           @RequestParam String userEmail) {
+        return ResponseEntity.ok(cardService.addUser(cardId, cardListId, boardId, userEmail));
+    }
 }

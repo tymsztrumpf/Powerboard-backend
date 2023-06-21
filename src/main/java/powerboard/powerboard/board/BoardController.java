@@ -21,7 +21,7 @@ public class BoardController {
         return ResponseEntity.ok(boardService.create(request));
     }
     @DeleteMapping
-    ResponseEntity<Void> remove(@RequestParam Long boardId) {
+    public ResponseEntity<Void> remove(@RequestParam Long boardId) {
         boardService.deleteBoard(boardId);
         return ResponseEntity.ok().build();
     }

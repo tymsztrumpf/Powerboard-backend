@@ -7,6 +7,8 @@ import powerboard.powerboard.board.Board;
 import powerboard.powerboard.board.BoardRepository;
 import powerboard.powerboard.cardlist.CardList;
 import powerboard.powerboard.cardlist.CardListRepository;
+import powerboard.powerboard.user.User;
+import powerboard.powerboard.user.UserRepository;
 
 import java.util.Optional;
 
@@ -16,7 +18,9 @@ public class CardService {
     private final CardRepository cardRepository;
     private final CardListRepository cardListRepository;
     private final BoardRepository boardRepository;
+    private final UserRepository userRepository;
     private final CardDTOMapper cardDTOMapper;
+
     public CardDTO addCardToCardList(CardRequest request, Long boardId, Long cardListId) {
         Optional<Board> optionalBoard = boardRepository.findById(boardId);
         Board board = optionalBoard.orElseThrow(() -> new RuntimeException("Board not found"));
@@ -59,6 +63,25 @@ public class CardService {
         card.setDescription(request.getDescription());
         card.setExecutors(request.getExecutors());
         card.setCardList(cardListRepository.findById(request.getCardListId()).orElseThrow());
+        cardRepository.save(card);
+        return cardDTOMapper.apply(card);
+    }
+    @Transactional
+    public CardDTO addUser(Long cardId, Long cardListId, Long boardId, String userEmail) {
+        Optional<Board> optionalBoard = boardRepository.findById(boardId);
+        Board board = optionalBoard.orElseThrow(() -> new RuntimeException("Board not found"));
+
+        Optional<User> optionalUser = userRepository.findByEmail(userEmail);
+        User user = optionalUser.orElseThrow(() -> new RuntimeException("User not found"));
+
+        CardList cardList = board.getCardLists().stream().filter(c -> c.getId() == cardListId).findAny().get();
+
+        Card card = cardList.getCards().stream().filter(c -> c.getId() == cardId).findAny().get();
+
+        if(board.getUsers().contains(user)){
+            card.addUser(user);
+        }
+        else throw new RuntimeException("This user is not assigned to this board");
         cardRepository.save(card);
         return cardDTOMapper.apply(card);
     }
