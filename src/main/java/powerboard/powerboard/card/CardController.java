@@ -12,11 +12,10 @@ public class CardController {
 
     private final CardService cardService;
     @PostMapping
-    public ResponseEntity<Void> add(@RequestBody CardRequest request,
+    public ResponseEntity<CardDTO> add(@RequestBody CardRequest request,
                                     @RequestParam Long boardId,
                                     @RequestParam Long cardListId) {
-        cardService.addCardToCardList(request, boardId, cardListId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(cardService.addCardToCardList(request, boardId, cardListId));
     }
     @DeleteMapping
     public ResponseEntity<Void> remove(@RequestParam Long cardId,
@@ -26,12 +25,11 @@ public class CardController {
         return ResponseEntity.ok().build();
     }
     @PatchMapping
-    public ResponseEntity<Void> update(@RequestBody CardRequest request,
+    public ResponseEntity<CardDTO> update(@RequestBody CardRequest request,
                                        @RequestParam Long cardId,
                                        @RequestParam Long cardListId,
                                        @RequestParam Long boardId) {
-        cardService.updateCard(request, cardId, cardListId, boardId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(cardService.updateCard(request, cardId, cardListId, boardId));
     }
 
 }

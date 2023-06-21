@@ -16,7 +16,8 @@ public class CardService {
     private final CardRepository cardRepository;
     private final CardListRepository cardListRepository;
     private final BoardRepository boardRepository;
-    public void addCardToCardList(CardRequest request, Long boardId, Long cardListId) {
+    private final CardDTOMapper cardDTOMapper;
+    public CardDTO addCardToCardList(CardRequest request, Long boardId, Long cardListId) {
         Optional<Board> optionalBoard = boardRepository.findById(boardId);
         Board board = optionalBoard.orElseThrow(() -> new RuntimeException("Board not found"));
 
@@ -30,6 +31,7 @@ public class CardService {
         cardList.getCards().add(card);
         cardRepository.save(card);
         cardListRepository.save(cardList);
+        return cardDTOMapper.apply(card);
     }
     public void deleteCard(Long cardId, Long cardListId, Long boardId) {
         Optional<Board> optionalBoard = boardRepository.findById(boardId);
@@ -45,7 +47,7 @@ public class CardService {
     }
 
     @Transactional
-    public void updateCard(CardRequest request, Long cardId, Long cardListId, Long boardId) {
+    public CardDTO updateCard(CardRequest request, Long cardId, Long cardListId, Long boardId) {
         Optional<Board> optionalBoard = boardRepository.findById(boardId);
         Board board = optionalBoard.orElseThrow(() -> new RuntimeException("Board not found"));
 
@@ -58,5 +60,6 @@ public class CardService {
         card.setExecutors(request.getExecutors());
         card.setCardList(cardListRepository.findById(request.getCardListId()).orElseThrow());
         cardRepository.save(card);
+        return cardDTOMapper.apply(card);
     }
 }
