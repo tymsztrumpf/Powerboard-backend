@@ -7,6 +7,7 @@ import powerboard.powerboard.board.Board;
 import powerboard.powerboard.board.BoardRepository;
 import powerboard.powerboard.cardlist.CardList;
 import powerboard.powerboard.cardlist.CardListRepository;
+import powerboard.powerboard.exception.ApiRequestException;
 import powerboard.powerboard.user.User;
 import powerboard.powerboard.user.UserRepository;
 
@@ -23,7 +24,7 @@ public class CardService {
 
     public CardDTO addCardToCardList(CardRequest request, Long boardId, Long cardListId) {
         Optional<Board> optionalBoard = boardRepository.findById(boardId);
-        Board board = optionalBoard.orElseThrow(() -> new RuntimeException("Board not found"));
+        Board board = optionalBoard.orElseThrow(() -> new ApiRequestException("Board not found"));
 
         CardList cardList = board.getCardLists().stream().filter(c -> c.getId() == cardListId).findAny().get();
 
@@ -39,7 +40,7 @@ public class CardService {
     }
     public void deleteCard(Long cardId, Long cardListId, Long boardId) {
         Optional<Board> optionalBoard = boardRepository.findById(boardId);
-        Board board = optionalBoard.orElseThrow(() -> new RuntimeException("Board not found"));
+        Board board = optionalBoard.orElseThrow(() -> new ApiRequestException("Board not found"));
 
         CardList cardList = board.getCardLists().stream().filter(c -> c.getId() == cardListId).findAny().get();
 
@@ -53,7 +54,7 @@ public class CardService {
     @Transactional
     public CardDTO updateCard(CardRequest request, Long cardId, Long cardListId, Long boardId) {
         Optional<Board> optionalBoard = boardRepository.findById(boardId);
-        Board board = optionalBoard.orElseThrow(() -> new RuntimeException("Board not found"));
+        Board board = optionalBoard.orElseThrow(() -> new ApiRequestException("Board not found"));
 
         CardList cardList = board.getCardLists().stream().filter(c -> c.getId() == cardListId).findAny().get();
 
@@ -69,10 +70,10 @@ public class CardService {
     @Transactional
     public CardDTO addUser(Long cardId, Long cardListId, Long boardId, String userEmail) {
         Optional<Board> optionalBoard = boardRepository.findById(boardId);
-        Board board = optionalBoard.orElseThrow(() -> new RuntimeException("Board not found"));
+        Board board = optionalBoard.orElseThrow(() -> new ApiRequestException("Board not found"));
 
         Optional<User> optionalUser = userRepository.findByEmail(userEmail);
-        User user = optionalUser.orElseThrow(() -> new RuntimeException("User not found"));
+        User user = optionalUser.orElseThrow(() -> new ApiRequestException("User not found"));
 
         CardList cardList = board.getCardLists().stream().filter(c -> c.getId() == cardListId).findAny().get();
 
@@ -81,7 +82,7 @@ public class CardService {
         if(board.getUsers().contains(user)){
             card.addUser(user);
         }
-        else throw new RuntimeException("This user is not assigned to this board");
+        else throw new ApiRequestException("This user is not assigned to this board");
         cardRepository.save(card);
         return cardDTOMapper.apply(card);
     }

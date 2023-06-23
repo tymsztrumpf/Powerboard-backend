@@ -57,7 +57,7 @@ public class BoardService {
     @Transactional
     public BoardDTO update(BoardRequest request, Long boardId) {
         Optional<Board> optionalBoard = boardRepository.findById(boardId);
-        Board board = optionalBoard.orElseThrow(() -> new RuntimeException("Board not found"));
+        Board board = optionalBoard.orElseThrow(() -> new ApiRequestException("Board not found"));
 
         board.setTitle(request.getTitle());
         boardRepository.save(board);
@@ -66,10 +66,10 @@ public class BoardService {
     @Transactional
     public BoardDTO addUser(String userEmail, Long boardId) {
         Optional<Board> optionalBoard = boardRepository.findById(boardId);
-        Board board = optionalBoard.orElseThrow(() -> new RuntimeException("Board not found"));
+        Board board = optionalBoard.orElseThrow(() -> new ApiRequestException("Board not found"));
 
         Optional<User> optionalUser = userRepository.findByEmail(userEmail);
-        User user = optionalUser.orElseThrow(() -> new RuntimeException("User not found"));
+        User user = optionalUser.orElseThrow(() -> new ApiRequestException("User not found"));
 
         board.addUser(user);
         boardRepository.save(board);
@@ -77,7 +77,7 @@ public class BoardService {
     }
     public Set<UserDTO> getBoardUsers(Long boardId) {
         Optional<Board> optionalBoard = boardRepository.findById(boardId);
-        Board board = optionalBoard.orElseThrow(() -> new RuntimeException("Board not found"));
+        Board board = optionalBoard.orElseThrow(() -> new ApiRequestException("Board not found"));
 
         return board.getUsers().stream().map(userDTOMapper).collect(Collectors.toSet());
     }

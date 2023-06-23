@@ -7,6 +7,7 @@ import powerboard.powerboard.board.Board;
 import powerboard.powerboard.board.BoardRepository;
 import powerboard.powerboard.card.Card;
 import powerboard.powerboard.card.CardRepository;
+import powerboard.powerboard.exception.ApiRequestException;
 
 import java.util.Optional;
 import java.util.Set;
@@ -20,7 +21,7 @@ public class CardListService {
 
     public CardListDTO addListToBoard(CardListRequest request, Long boardId) {
         Optional<Board> optionalBoard = boardRepository.findById(boardId);
-        Board board = optionalBoard.orElseThrow(() -> new RuntimeException("Board not found"));
+        Board board = optionalBoard.orElseThrow(() -> new ApiRequestException("Board not found"));
         // TODO HANDLE EXCEPTION IN PROPER ELEGANT WAY
 
         CardList cardList = CardList.builder()
@@ -35,7 +36,7 @@ public class CardListService {
     }
     public void deleteCardList(Long cardListId, Long boardId) {
         Optional<Board> optionalBoard = boardRepository.findById(boardId);
-        Board board = optionalBoard.orElseThrow(() -> new RuntimeException("Board not found"));
+        Board board = optionalBoard.orElseThrow(() -> new ApiRequestException("Board not found"));
 
         CardList cardList = board.getCardLists().stream().filter(c -> c.getId() == cardListId).findAny().get();
 
@@ -46,7 +47,7 @@ public class CardListService {
     @Transactional
     public CardListDTO update(CardListRequest request, Long boardId, Long cardListId) {
         Optional<Board> optionalBoard = boardRepository.findById(boardId);
-        Board board = optionalBoard.orElseThrow(() -> new RuntimeException("Board bo found"));
+        Board board = optionalBoard.orElseThrow(() -> new ApiRequestException("Board bo found"));
         CardList cardList = board.getCardLists().stream().filter(c -> c.getId() == cardListId).findAny().get();
         cardList.setTitle(request.getTitle());
 
