@@ -22,7 +22,6 @@ public class CardListService {
     public CardListDTO addListToBoard(CardListRequest request, Long boardId) {
         Optional<Board> optionalBoard = boardRepository.findById(boardId);
         Board board = optionalBoard.orElseThrow(() -> new ApiRequestException("Board not found"));
-        // TODO HANDLE EXCEPTION IN PROPER ELEGANT WAY
 
         CardList cardList = CardList.builder()
                 .title(request.getTitle())

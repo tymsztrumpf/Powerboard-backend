@@ -63,7 +63,7 @@ public class CardService {
         card.setTitle(request.getTitle());
         card.setDescription(request.getDescription());
         card.setExecutors(request.getExecutors());
-        card.setCardList(cardListRepository.findById(request.getCardListId()).orElseThrow());
+        card.setCardList(cardListRepository.findById(request.getCardListId()).orElseThrow(() -> new ApiRequestException("CardList not found")));
         cardRepository.save(card);
         return cardDTOMapper.apply(card);
     }

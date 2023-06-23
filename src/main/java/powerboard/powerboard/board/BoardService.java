@@ -37,7 +37,7 @@ public class BoardService {
     private User getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) auth.getPrincipal();
-        return userRepository.findByEmail(user.getEmail()).orElseThrow();
+        return userRepository.findByEmail(user.getEmail()).orElseThrow(() -> new ApiRequestException("User not found"));
     }
     public Set<BoardDTO> getUserBoards() {
         return boardRepository.findAllByUserEmail(getCurrentUser().getEmail())
