@@ -5,6 +5,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import powerboard.powerboard.exception.ApiRequestException;
 import powerboard.powerboard.user.User;
 import powerboard.powerboard.user.UserDTO;
 import powerboard.powerboard.user.UserDTOMapper;
@@ -47,7 +48,7 @@ public class BoardService {
     public void deleteBoard(Long boardId) {
         User user = getCurrentUser();
         Optional<Board> optionalBoard = boardRepository.findById(boardId);
-        Board board = optionalBoard.orElseThrow(() -> new RuntimeException("Board not found"));
+        Board board = optionalBoard.orElseThrow(() -> new ApiRequestException("Board not found"));
         user.getBoards().remove(board);
 
         userRepository.save(user);
