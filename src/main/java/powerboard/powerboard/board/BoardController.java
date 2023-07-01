@@ -13,7 +13,7 @@ import java.util.Set;
 public class BoardController {
     private final BoardService boardService;
 
-    @GetMapping
+    @GetMapping("/boards")
     public ResponseEntity<Set<BoardDTO>> getUserBoards(){
         return ResponseEntity.ok(boardService.getUserBoards());
     }
@@ -39,5 +39,9 @@ public class BoardController {
     @GetMapping("/users")
     public ResponseEntity <Set<UserDTO>> getBoardUsers(@RequestParam Long boardId) {
         return ResponseEntity.ok(boardService.getBoardUsers(boardId));
+    }
+    @GetMapping
+    public ResponseEntity<BoardDTO> getBoard(@RequestParam Long boardId) {
+        return ResponseEntity.ok(boardService.getBoard(boardId));
     }
 }

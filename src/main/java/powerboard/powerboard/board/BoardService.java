@@ -11,6 +11,7 @@ import powerboard.powerboard.user.UserDTO;
 import powerboard.powerboard.user.UserDTOMapper;
 import powerboard.powerboard.user.UserRepository;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -47,8 +48,7 @@ public class BoardService {
 
     public void deleteBoard(Long boardId) {
         User user = getCurrentUser();
-        Optional<Board> optionalBoard = boardRepository.findById(boardId);
-        Board board = optionalBoard.orElseThrow(() -> new ApiRequestException("Board not found"));
+        Board board = getBoardById(boardId);
         user.getBoards().remove(board);
 
         userRepository.save(user);
@@ -56,8 +56,7 @@ public class BoardService {
     }
     @Transactional
     public BoardDTO update(BoardRequest request, Long boardId) {
-        Optional<Board> optionalBoard = boardRepository.findById(boardId);
-        Board board = optionalBoard.orElseThrow(() -> new ApiRequestException("Board not found"));
+        Board board = getBoardById(boardId);
 
         board.setTitle(request.getTitle());
         boardRepository.save(board);
@@ -65,8 +64,7 @@ public class BoardService {
     }
     @Transactional
     public BoardDTO addUser(String userEmail, Long boardId) {
-        Optional<Board> optionalBoard = boardRepository.findById(boardId);
-        Board board = optionalBoard.orElseThrow(() -> new ApiRequestException("Board not found"));
+        Board board = getBoardById(boardId);
 
         Optional<User> optionalUser = userRepository.findByEmail(userEmail);
         User user = optionalUser.orElseThrow(() -> new ApiRequestException("User not found"));
@@ -76,9 +74,23 @@ public class BoardService {
         return boardDTOMapper.apply(board);
     }
     public Set<UserDTO> getBoardUsers(Long boardId) {
-        Optional<Board> optionalBoard = boardRepository.findById(boardId);
-        Board board = optionalBoard.orElseThrow(() -> new ApiRequestException("Board not found"));
+        Board board = getBoardById(boardId);
 
         return board.getUsers().stream().map(userDTOMapper).collect(Collectors.toSet());
+    }
+    public BoardDTO getBoard(Long boardId) {
+        Board board = getCurrentUser()
+                .getBoards()
+                .stream()
+                .filter(b -> b.getId()==boardId)
+                .findAny()
+                .orElseThrow(() -> new ApiRequestException("Board not found"));
+
+        return boardDTOMapper.apply(board);
+    }
+    private Board getBoardById(Long boardId) {
+        Optional<Board> optionalBoard = boardRepository.findById(boardId);
+
+        return optionalBoard.orElseThrow(() -> new ApiRequestException("Board not found"));
     }
 }

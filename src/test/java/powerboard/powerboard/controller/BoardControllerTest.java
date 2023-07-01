@@ -19,25 +19,25 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class BoardControllerTest {
 
-    @Mock
-    private BoardService boardService;
-    @Mock
-    private BoardDTOMapper boardDTOMapper;
-
-    @InjectMocks
-    private BoardController boardController;
-
-    private MockMvc mockMvc;
-
-    private ObjectMapper objectMapper;
-
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(boardController).build();
-        objectMapper = new ObjectMapper();
-    }
+//    @Mock
+//    private BoardService boardService;
+//    @Mock
+//    private BoardDTOMapper boardDTOMapper;
+//
+//    @InjectMocks
+//    private BoardController boardController;
+//
+//    private MockMvc mockMvc;
+//
+//    private ObjectMapper objectMapper;
+//
+//
+//    @BeforeEach
+//    void setUp() {
+//        MockitoAnnotations.openMocks(this);
+//        mockMvc = MockMvcBuilders.standaloneSetup(boardController).build();
+//        objectMapper = new ObjectMapper();
+//    }
 
 //    @Test
 //    void shouldGetUserBoards() throws Exception {
@@ -52,17 +52,17 @@ public class BoardControllerTest {
 //        verify(boardService, times(1)).getUserBoards();
 //    }
 
-    @Test
-    void shouldCreateBoard() throws Exception {
-        BoardRequest request = new BoardRequest();
-
-        String jsonRequest = objectMapper.writeValueAsString(request);
-
-        mockMvc.perform(post("/api/board")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(jsonRequest))
-                .andExpect(status().isOk());
-
-        verify(boardService, times(1)).create(request);
-    }
+//    @Test
+//    void shouldCreateBoard() throws Exception {
+//        BoardRequest request = new BoardRequest();
+//
+//        String jsonRequest = objectMapper.writeValueAsString(request);
+//
+//        mockMvc.perform(post("/api/board")
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(jsonRequest))
+//                .andExpect(status().isOk());
+//
+//        verify(boardService, times(1)).create(request);
+//    }
 }

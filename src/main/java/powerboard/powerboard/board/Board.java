@@ -16,7 +16,6 @@ import java.util.Set;
 public class Board {
     @Id
     @GeneratedValue
-    @EqualsAndHashCode.Exclude
     private Long id;
     private String title;
     @ManyToOne
