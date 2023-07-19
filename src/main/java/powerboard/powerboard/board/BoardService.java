@@ -63,7 +63,7 @@ public class BoardService {
         return boardDTOMapper.apply(board);
     }
     @Transactional
-    public BoardDTO addUser(String userEmail, Long boardId) {
+    public UserDTO addUser(String userEmail, Long boardId) {
         Board board = getBoardById(boardId);
 
         Optional<User> optionalUser = userRepository.findByEmail(userEmail);
@@ -71,7 +71,7 @@ public class BoardService {
 
         board.addUser(user);
         boardRepository.save(board);
-        return boardDTOMapper.apply(board);
+        return userDTOMapper.apply(user);
     }
     public Set<UserDTO> getBoardUsers(Long boardId) {
         Board board = getBoardById(boardId);
