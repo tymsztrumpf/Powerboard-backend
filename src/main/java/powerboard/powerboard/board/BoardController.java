@@ -40,8 +40,8 @@ public class BoardController {
     public ResponseEntity <Set<UserDTO>> getBoardUsers(@RequestParam Long boardId) {
         return ResponseEntity.ok(boardService.getBoardUsers(boardId));
     }
-    @GetMapping
-    public ResponseEntity<BoardDTO> getBoard(@RequestParam Long boardId) {
+    @GetMapping("/{boardId}")
+    public ResponseEntity<BoardDTO> getBoard(@PathVariable Long boardId) {
         return ResponseEntity.ok(boardService.getBoard(boardId));
     }
 }

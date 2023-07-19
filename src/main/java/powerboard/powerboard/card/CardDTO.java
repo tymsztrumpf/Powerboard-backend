@@ -5,9 +5,10 @@ import powerboard.powerboard.user.UserDTO;
 import java.util.Set;
 
 public record CardDTO (
-    Long Id,
+    Long id,
     String title,
     String description,
-    Set<UserDTO> executors
+    Set<UserDTO> executors,
+    Long cardListId
 ){
 }

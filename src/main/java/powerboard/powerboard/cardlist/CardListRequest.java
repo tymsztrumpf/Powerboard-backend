@@ -11,4 +11,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CardListRequest {
     private String title;
+    private Integer orderNumber;
 }
