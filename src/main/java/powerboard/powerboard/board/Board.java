@@ -36,8 +36,10 @@ public class Board {
         this.users = new HashSet<>();
         this.cardLists = new HashSet<>();
     }
-    void addUser(User user){
+    void addUser(User user) {
         this.users.add(user);
     }
-
+    void removeUser(User user) {
+        this.users.remove(user);
+    }
 }

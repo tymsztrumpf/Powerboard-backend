@@ -44,4 +44,8 @@ public class BoardController {
     public ResponseEntity<BoardDTO> getBoard(@PathVariable Long boardId) {
         return ResponseEntity.ok(boardService.getBoard(boardId));
     }
+    @DeleteMapping("/remove-user") ResponseEntity<UserDTO> removeUser(@RequestParam String userEmail,
+                                                                @RequestParam Long boardId) {
+        return ResponseEntity.ok(boardService.removeUser(userEmail, boardId));
+    }
 }

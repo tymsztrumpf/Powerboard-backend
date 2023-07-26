@@ -28,6 +28,10 @@ public class CardController {
                                        @RequestParam Long cardId,
                                        @RequestParam Long cardListId,
                                        @RequestParam Long boardId) {
+        System.out.println(cardId);
+        System.out.println(cardListId);
+        System.out.println(boardId);
+        System.out.println(request);
         return ResponseEntity.ok(cardService.updateCard(request, cardId, cardListId, boardId));
     }
     @PatchMapping("/add-user")
