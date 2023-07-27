@@ -3,6 +3,7 @@ package powerboard.powerboard.card;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import powerboard.powerboard.user.UserDTO;
 
 @RestController
 @RequiredArgsConstructor
@@ -35,7 +36,7 @@ public class CardController {
         return ResponseEntity.ok(cardService.updateCard(request, cardId, cardListId, boardId));
     }
     @PatchMapping("/add-user")
-    public ResponseEntity<CardDTO> addUser(@RequestParam Long cardId,
+    public ResponseEntity<UserDTO> addUser(@RequestParam Long cardId,
                                            @RequestParam Long cardListId,
                                            @RequestParam Long boardId,
                                            @RequestParam String userEmail) {

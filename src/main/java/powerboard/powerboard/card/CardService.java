@@ -9,6 +9,8 @@ import powerboard.powerboard.cardlist.CardList;
 import powerboard.powerboard.cardlist.CardListRepository;
 import powerboard.powerboard.exception.ApiRequestException;
 import powerboard.powerboard.user.User;
+import powerboard.powerboard.user.UserDTO;
+import powerboard.powerboard.user.UserDTOMapper;
 import powerboard.powerboard.user.UserRepository;
 
 import java.util.Optional;
@@ -21,6 +23,7 @@ public class CardService {
     private final BoardRepository boardRepository;
     private final UserRepository userRepository;
     private final CardDTOMapper cardDTOMapper;
+    private final UserDTOMapper userDTOMapper;
 
     public CardDTO addCardToCardList(CardRequest request, Long boardId, Long cardListId) {
         Optional<Board> optionalBoard = boardRepository.findById(boardId);
@@ -68,7 +71,7 @@ public class CardService {
         return cardDTOMapper.apply(card);
     }
     @Transactional
-    public CardDTO addUser(Long cardId, Long cardListId, Long boardId, String userEmail) {
+    public UserDTO addUser(Long cardId, Long cardListId, Long boardId, String userEmail) {
         Optional<Board> optionalBoard = boardRepository.findById(boardId);
         Board board = optionalBoard.orElseThrow(() -> new ApiRequestException("Board not found"));
 
@@ -84,6 +87,6 @@ public class CardService {
         }
         else throw new ApiRequestException("This user is not assigned to this board");
         cardRepository.save(card);
-        return cardDTOMapper.apply(card);
+        return userDTOMapper.apply(user);
     }
 }

@@ -20,7 +20,6 @@ public class Board {
     private String title;
     @ManyToOne
     private User owner;
-    //TODO THINK ABOUT ROLES INSTEAD OF OWNER CLASS FIELD
     @ManyToMany(cascade = {CascadeType.MERGE})
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
