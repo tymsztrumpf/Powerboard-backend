@@ -18,4 +18,5 @@ public class CardRequest {
     private String description;
     private Set<User> executors;
     private Long cardListId;
+    private Integer orderNum;
 }

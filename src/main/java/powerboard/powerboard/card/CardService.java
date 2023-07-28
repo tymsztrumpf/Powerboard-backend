@@ -31,9 +31,12 @@ public class CardService {
 
         CardList cardList = board.getCardLists().stream().filter(c -> c.getId() == cardListId).findAny().get();
 
+        int orderNum = cardList.getCards().size();
+
         Card card = Card.builder()
                 .title(request.getTitle())
                 .cardList(cardList)
+                .orderNum(orderNum)
                 .build();
 
         cardList.getCards().add(card);
