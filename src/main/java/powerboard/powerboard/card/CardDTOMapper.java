@@ -23,6 +23,7 @@ public class CardDTOMapper implements Function<Card, CardDTO> {
                         .collect(Collectors.toSet()) :
                 new HashSet<>();
 
+
         return new CardDTO(
                 card.getId(),
                 card.getTitle(),

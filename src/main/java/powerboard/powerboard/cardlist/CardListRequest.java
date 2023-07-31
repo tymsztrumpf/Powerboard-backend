@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import powerboard.powerboard.card.Card;
+
+import java.util.Set;
 
 @Data
 @Builder
@@ -11,5 +14,4 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CardListRequest {
     private String title;
-    private Integer orderNumber;
 }

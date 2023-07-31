@@ -26,5 +26,4 @@ public class CardList {
     private Board board;
     @OneToMany(mappedBy = "cardList", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Card> cards;
-    private Integer orderNumber;
 }

@@ -58,7 +58,10 @@ public class BoardService {
     public BoardDTO update(BoardRequest request, Long boardId) {
         Board board = getBoardById(boardId);
 
+        System.out.println(request);
         board.setTitle(request.getTitle());
+        board.setCardLists(request.getCardLists());
+
         boardRepository.save(board);
         return boardDTOMapper.apply(board);
     }

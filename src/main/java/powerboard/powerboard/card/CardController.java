@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import powerboard.powerboard.user.UserDTO;
 
+import java.util.Set;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/card")
@@ -41,5 +43,10 @@ public class CardController {
                                            @RequestParam Long boardId,
                                            @RequestParam String userEmail) {
         return ResponseEntity.ok(cardService.addUser(cardId, cardListId, boardId, userEmail));
+    }
+    @PatchMapping("/swap")
+    public ResponseEntity<Set<CardDTO>> swap(@RequestBody Set<CardRequest> requests,
+                                             @RequestParam Long boardId) {
+        return ResponseEntity.ok(cardService.swapCards(requests, boardId));
     }
 }

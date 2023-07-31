@@ -14,6 +14,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CardRequest {
+    private Long id;
     private String title;
     private String description;
     private Set<User> executors;

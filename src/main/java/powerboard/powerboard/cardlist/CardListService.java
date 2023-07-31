@@ -49,7 +49,6 @@ public class CardListService {
         Board board = optionalBoard.orElseThrow(() -> new ApiRequestException("Board bo found"));
         CardList cardList = board.getCardLists().stream().filter(c -> c.getId() == cardListId).findAny().get();
         cardList.setTitle(request.getTitle());
-        cardList.setOrderNumber(request.getOrderNumber());
 
         cardListRepository.save(cardList);
         return cardListDTOMapper.apply(cardList);

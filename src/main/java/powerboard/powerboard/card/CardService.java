@@ -14,6 +14,8 @@ import powerboard.powerboard.user.UserDTOMapper;
 import powerboard.powerboard.user.UserRepository;
 
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +33,7 @@ public class CardService {
 
         CardList cardList = board.getCardLists().stream().filter(c -> c.getId() == cardListId).findAny().get();
 
-        int orderNum = cardList.getCards().size();
+        int orderNum = cardList.getCards().size() + 1;
 
         Card card = Card.builder()
                 .title(request.getTitle())
@@ -91,5 +93,24 @@ public class CardService {
         else throw new ApiRequestException("This user is not assigned to this board");
         cardRepository.save(card);
         return userDTOMapper.apply(user);
+    }
+
+    @Transactional
+    public Set<CardDTO> swapCards(Set<CardRequest> requests, Long boardId) {
+        Optional<Board> optionalBoard = boardRepository.findById(boardId);
+        Board board = optionalBoard.orElseThrow(() -> new ApiRequestException("Board not found"));
+
+        return requests.stream().map(request -> {
+            Card card = cardRepository.findById(request.getId()).orElseThrow(() -> new ApiRequestException("Card not found"));
+
+            Long newCardListId = request.getCardListId();
+            CardList updatedCardList = board.getCardLists().stream().filter(c -> c.getId() == newCardListId).findAny().orElseThrow(() -> new ApiRequestException("CardList not found"));
+
+            card.setOrderNum(request.getOrderNum());
+            card.setCardList(updatedCardList);
+            cardRepository.save(card);
+
+            return cardDTOMapper.apply(card);
+        }).collect(Collectors.toSet());
     }
 }
