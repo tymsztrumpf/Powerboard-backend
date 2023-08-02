@@ -11,7 +11,8 @@ public record BoardDTO(
         String title,
         UserDTO owner,
         Set<UserDTO> users,
-        Set<CardListDTO> cardLists
+        Set<CardListDTO> cardLists,
+        String imagePath
 ) {
 
 }

@@ -28,10 +28,12 @@ public class Board {
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
     @EqualsAndHashCode.Exclude
     private Set<CardList> cardLists;
+    private String imagePath;
     @Builder
-    public Board(String title, User owner) {
+    public Board(String title, User owner, String imagePath) {
         this.title = title;
         this.owner = owner;
+        this.imagePath = imagePath;
         this.users = new HashSet<>();
         this.cardLists = new HashSet<>();
     }

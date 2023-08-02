@@ -26,7 +26,8 @@ private final CardListDTOMapper cardListDTOMapper;
                 board.getCardLists()
                         .stream()
                         .map(cardListDTOMapper)
-                        .collect(Collectors.toSet())
+                        .collect(Collectors.toSet()),
+                board.getImagePath()
                 );
     }
 }
