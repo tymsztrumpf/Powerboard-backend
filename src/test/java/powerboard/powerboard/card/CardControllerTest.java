@@ -1,4 +1,4 @@
-package powerboard.powerboard.controller;
+package powerboard.powerboard.card;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;

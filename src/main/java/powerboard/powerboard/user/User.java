@@ -62,4 +62,10 @@ public class User implements UserDetails {
         return true;
     }
 
+    public void removeBoard(Board board) {
+        this.boards.remove(board);
+    }
+    public void addBoard(Board board) {
+        this.boards.add(board);
+    }
 }

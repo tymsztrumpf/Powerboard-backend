@@ -32,7 +32,7 @@ public class BoardService {
                 .imagePath(request.getImagePath())
                 .build();
         board.getUsers().add(user);
-        user.getBoards().add(board);
+        user.addBoard(board);
         boardRepository.save(board);
         return boardDTOMapper.apply(board);
     }
@@ -50,7 +50,7 @@ public class BoardService {
     public void deleteBoard(Long boardId) {
         User user = getCurrentUser();
         Board board = getBoardById(boardId);
-        user.getBoards().remove(board);
+        user.removeBoard(board);
 
         userRepository.save(user);
         boardRepository.delete(board);
@@ -59,7 +59,6 @@ public class BoardService {
     public BoardDTO update(BoardRequest request, Long boardId) {
         Board board = getBoardById(boardId);
 
-        System.out.println(request);
         board.setTitle(request.getTitle());
         board.setCardLists(request.getCardLists());
 
