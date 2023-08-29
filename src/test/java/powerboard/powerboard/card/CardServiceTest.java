@@ -108,13 +108,13 @@ class CardServiceTest {
         cards.add(card);
         cardList.setCards(cards);
 
-        Set<Card> result = Set.of();
+        Set<Card> expected = Set.of();
 
         // when
         when(boardRepository.findById(board.getId())).thenReturn(Optional.of(board));
         cardService.deleteCard(card.getId(), cardList.getId(), board.getId());
 
-        Set<Card> expected = cardList.getCards();
+        Set<Card> result = cardList.getCards();
 
         // then
         ArgumentCaptor<Card> cardArgumentCaptor = ArgumentCaptor.forClass(Card.class);
