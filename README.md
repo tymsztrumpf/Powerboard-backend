@@ -19,6 +19,14 @@ Frontend
 * Dnd-kit
 * Mui-materials
 
+Deploy
+* AWS S3
+* AWS EC2
+* AWS RDS
+
+# Live version
+http://powerboard-front.s3-website.eu-north-1.amazonaws.com/
+
 ## Gifs
 
 ![PB_HOME](https://github.com/tymsztrumpf/Powerboard-backend/assets/106514240/b671c264-c696-4e04-a169-6d429cf8a55c)
