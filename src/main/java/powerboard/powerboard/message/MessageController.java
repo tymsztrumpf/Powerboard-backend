@@ -1,17 +1,28 @@
 package powerboard.powerboard.message;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
+import powerboard.powerboard.board.BoardDTO;
+
+import java.io.DataInput;
+import java.io.IOException;
 
 @Controller
+@RequiredArgsConstructor
 public class MessageController {
 
-    // Handles messages from /app/chat. (Note the Spring adds the /app prefix for us).
+    private final MessageService messageService;
+    private final ObjectMapper objectMapper;
+
     @MessageMapping("/chat")
-    // Sends the return value of this method to /topic/messages
     @SendTo("/topic/messages")
-    public MessageDTO getMessages(MessageDTO dto) {
-        return dto;
+    public BoardDTO getMessages(String jsonMessage) throws IOException {
+        BoardEventRequest request = objectMapper.readValue(jsonMessage, BoardEventRequest.class);
+        return messageService.convert(request);
     }
+
 }
