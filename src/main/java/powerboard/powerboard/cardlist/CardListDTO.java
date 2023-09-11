@@ -5,7 +5,7 @@ import powerboard.powerboard.card.CardDTO;
 import java.util.Set;
 
 public record CardListDTO(
-        Long Id,
+        Long id,
         String title,
         Set<CardDTO> cards
 ) {
